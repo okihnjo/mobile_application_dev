@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
+import 'package:saloon_app/views/tab_containter.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +47,7 @@ class _LoginState extends State<Login> {
                 // ),
                 Container(
                   // color: Colors.blueAccent,
-                  height: 400,
+                  height: 450,
                   child: Column(children: [
                     Text(
                       "Barberino",
@@ -76,59 +78,8 @@ class _LoginState extends State<Login> {
                               Expanded(
                                 child: TabBarView(
                                   children: <Widget>[
-                                    Container(
-                                      // decoration: BoxDecoration(
-                                      //     border: Border.all(
-                                      //         color: Colors.deepOrange, width: 4)),
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        children: [
-                                          const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 16),
-                                            child: TextField(
-                                                decoration: InputDecoration(
-                                              filled: true,
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                              hintText: 'Username',
-                                              prefixIcon: Icon(Icons.email),
-                                            )),
-                                          ),
-                                          const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 16),
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                filled: true,
-                                                prefixIcon:
-                                                    Icon(Icons.password_sharp),
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10))),
-                                                hintText: 'Password',
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.all(12),
-                                            // color: Colors.red,
-                                            width: 320,
-                                            // alignment: Alignment.center,
-                                            child: const ElevatedButton(
-                                                onPressed: null,
-                                                child: Text("Login")),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      color: Colors.yellow,
-                                    ),
+                                    buildTabs(0, _formKey),
+                                    buildTabs(1, _formKey)
                                   ],
                                 ),
                               ),
@@ -139,16 +90,83 @@ class _LoginState extends State<Login> {
                     ),
                   ]),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: const Center(
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 2.0),
+                  child: Center(
                     child: Text("Noch kein Account? Dann hier registrieren"),
                   ),
                 ),
-                SizedBox(
-                  height: 5,
-                )
               ]),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTabs(int flag, GlobalKey<FormState> _passedFormKey) {
+    return Form(
+      child: Container(
+        // decoration: BoxDecoration(
+        //     border: Border.all(
+        //         color: Colors.deepOrange, width: 4)),
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+              child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    hintText: 'Username',
+                    prefixIcon: Icon(Icons.email),
+                  )),
+            ),
+            if (flag != 0)
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    prefixIcon: Icon(Icons.post_add_rounded),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    hintText: 'Postalcode',
+                  ),
+                ),
+              ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+              child: TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  prefixIcon: Icon(Icons.password_sharp),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  hintText: 'Password',
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(12),
+              // color: Colors.red,
+              width: 320,
+              // alignment: Alignment.center,
+              child: ElevatedButton(
+                  onPressed: () => {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                ContainerPage(title: "SaloonApp")))
+                      },
+                  child: Text("Login")),
+            ),
+          ],
         ),
       ),
     );
