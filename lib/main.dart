@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:saloon_app/views/authentification/login/login.dart';
-import 'package:saloon_app/views/tabs/home/home_screen.dart';
+import 'package:saloon_app/views/tabs/home/settings_screen.dart';
 import 'package:saloon_app/views/tab_containter.dart';
 
 void main() {

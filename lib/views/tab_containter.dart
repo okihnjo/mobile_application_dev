@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:saloon_app/main.dart';
 import 'package:saloon_app/views/tabs/chat/chat_screen.dart';
-import 'package:saloon_app/views/tabs/home/home_screen.dart';
+import 'package:saloon_app/views/tabs/home/settings_screen.dart';
 import 'package:saloon_app/views/tabs/profile/profile_screen.dart';
 
 class ContainerPage extends StatefulWidget {
@@ -21,8 +21,8 @@ class ContainerPage extends StatefulWidget {
   static const String routeName = "/tabContainer";
   final List<Map<String, Object>> _pages = [
     {
-      'page': const HomeScreen(),
-      "title": HomeScreen.pageName,
+      'page': const SettingsScreen(),
+      "title": SettingsScreen.pageName,
       "icon": Icons.home
     },
     {
@@ -41,7 +41,7 @@ class ContainerPage extends StatefulWidget {
 }
 
 class _ContainerPage extends State<ContainerPage> {
-  int _selectedPageIndex = 0;
+  int _selectedPageIndex = 1;
 
   void _selectPage(int index) {
     setState(() {
@@ -65,7 +65,8 @@ class _ContainerPage extends State<ContainerPage> {
         currentIndex: _selectedPageIndex,
         type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Settings'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chats'),
           BottomNavigationBarItem(
               icon: Icon(Icons.person_pin), label: 'Profile'),
