@@ -12,24 +12,24 @@ class SettingsUi extends StatelessWidget {
       sections: [
         SettingsSection(
           titlePadding: const EdgeInsets.only(top: 25, left: 15, bottom: 15),
-          title: 'Kontosicherheit',
+          title: 'Accountsecurity',
           tiles: [
             SettingsTile(
-              title: 'Konto',
+              title: 'Account',
               trailing: Icon(Icons.arrow_forward_ios),
               // subtitle: 'English',
               leading: Icon(Icons.account_circle),
               onPressed: (BuildContext context) {},
             ),
             SettingsTile(
-              title: 'Benachrichtigung',
+              title: 'Notifications',
               trailing: Icon(Icons.arrow_forward_ios),
               // subtitle: 'English',
               leading: Icon(Icons.circle_notifications),
               onPressed: (BuildContext context) {},
             ),
             SettingsTile(
-              title: 'Privatsphäre',
+              title: 'Privacy',
               trailing: Icon(Icons.arrow_forward_ios),
               // subtitle: 'English',
               leading: Icon(Icons.lock_outline_sharp),
@@ -39,10 +39,10 @@ class SettingsUi extends StatelessWidget {
         ),
         SettingsSection(
           titlePadding: EdgeInsets.all(15),
-          title: 'App-Einstellungen',
+          title: 'App-Settings',
           tiles: [
             SettingsTile(
-              title: 'Sprache',
+              title: 'Language',
               trailing: Icon(Icons.arrow_forward_ios),
               leading: Icon(Icons.language),
               onPressed: (BuildContext context) {},
@@ -80,7 +80,7 @@ class SettingsUi extends StatelessWidget {
               onPressed: (BuildContext context) {},
             ),
             SettingsTile(
-              title: 'Gib uns Feedback',
+              title: 'Feedback',
               // subtitle: 'English',
               leading: Icon(Icons.feedback),
               trailing: Icon(Icons.arrow_forward_ios),
