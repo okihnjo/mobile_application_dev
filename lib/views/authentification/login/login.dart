@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saloon_app/views/tab_containter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -9,10 +10,39 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 
   static const String routeName = "/login";
+  // final email = TextEditingController();
 }
 
 class _LoginState extends State<Login> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final email = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    email.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  signIn(String email, String password) async {
+    print(email + " " + password);
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,71 +133,72 @@ class _LoginState extends State<Login> {
   }
 
   Widget buildTabs(int flag, GlobalKey<FormState> _passedFormKey) {
-    return Form(
-      child: Container(
-        // decoration: BoxDecoration(
-        //     border: Border.all(
-        //         color: Colors.deepOrange, width: 4)),
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              child: TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    hintText: 'Username',
-                    prefixIcon: Icon(Icons.email),
-                  )),
-            ),
-            if (flag != 0)
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    prefixIcon: Icon(Icons.post_add_rounded),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    hintText: 'Postalcode',
-                  ),
-                ),
-              ),
+    return Container(
+      // decoration: BoxDecoration(
+      //     border: Border.all(
+      //         color: Colors.deepOrange, width: 4)),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            child: TextField(
+                controller: email,
+                decoration: const InputDecoration(
+                  filled: true,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  hintText: 'Username',
+                  prefixIcon: Icon(Icons.email),
+                )),
+          ),
+          if (flag != 0)
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
               child: TextField(
                 decoration: InputDecoration(
                   filled: true,
-                  prefixIcon: Icon(Icons.password_sharp),
+                  prefixIcon: Icon(Icons.post_add_rounded),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
-                  hintText: 'Password',
+                  hintText: 'Postalcode',
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(12),
-              // color: Colors.red,
-              width: 320,
-              // alignment: Alignment.center,
-              child: ElevatedButton(
-                  onPressed: () => {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                ContainerPage(title: "SaloonApp")))
-                      },
-                  child: Text("Login")),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            child: TextField(
+              controller: passwordController,
+              decoration: const InputDecoration(
+                filled: true,
+                prefixIcon: Icon(Icons.password_sharp),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                hintText: 'Password',
+              ),
             ),
-          ],
-        ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(12),
+            // color: Colors.red,
+            width: 320,
+            // alignment: Alignment.center,
+            child: ElevatedButton(
+                onPressed: () {
+                  signIn(email.text, passwordController.text);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          ContainerPage(title: "SaloonApp")));
+                },
+                // onPressed: () => {
+                //       // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //       //     builder: (BuildContext context) =>
+                //       //         ContainerPage(title: "SaloonApp")))
+                //       print(email.text + " und PW" + passwordController.text)
+                //     },
+                child: Text("Login")),
+          ),
+        ],
       ),
     );
   }

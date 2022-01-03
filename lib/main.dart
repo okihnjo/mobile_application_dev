@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:saloon_app/views/authentification/login/login.dart';
 import 'package:saloon_app/views/tabs/home/settings_screen.dart';
 import 'package:saloon_app/views/tab_containter.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+// import 'firebase_options.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      // options: DefaultFirebaseOptions.currentPlatform,
+      );
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
