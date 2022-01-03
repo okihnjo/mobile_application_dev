@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
                   height: 450,
                   child: Column(children: [
                     Text(
-                      "Barberino",
+                      "Saloon",
                       style: GoogleFonts.irishGrover(),
                       textScaleFactor: 2,
                     ),
@@ -96,11 +96,11 @@ class _LoginState extends State<Login> {
                                 labelColor: Colors.red,
                                 tabs: <Widget>[
                                   Tab(
-                                    text: "Privatkunde",
+                                    text: "Privat person",
                                     icon: Icon(Icons.person),
                                   ),
                                   Tab(
-                                    text: "Friseur",
+                                    text: "Company",
                                     icon: Icon(Icons.architecture_sharp),
                                   )
                                 ],
@@ -123,7 +123,7 @@ class _LoginState extends State<Login> {
                 const Padding(
                   padding: EdgeInsets.only(bottom: 2.0),
                   child: Center(
-                    child: Text("Noch kein Account? Dann hier registrieren"),
+                    child: Text("Already have an account? LogIn!"),
                   ),
                 ),
               ]),
@@ -196,7 +196,7 @@ class _LoginState extends State<Login> {
                 //       //         ContainerPage(title: "SaloonApp")))
                 //       print(email.text + " und PW" + passwordController.text)
                 //     },
-                child: Text("Login")),
+                child: Text("SignUp")),
           ),
         ],
       ),

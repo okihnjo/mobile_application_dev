@@ -73,7 +73,7 @@ class SettingsUi extends StatelessWidget {
               onPressed: (BuildContext context) {},
             ),
             SettingsTile(
-              title: 'Bugs und Fehler',
+              title: 'Bugs',
               // subtitle: 'English',
               leading: Icon(Icons.bug_report),
               trailing: Icon(Icons.arrow_forward_ios),
@@ -92,7 +92,7 @@ class SettingsUi extends StatelessWidget {
           titlePadding: EdgeInsets.all(15),
           tiles: [
             SettingsTile(
-                title: 'Abmelden',
+                title: 'SignOut',
                 // subtitle: 'English',
                 leading: Icon(Icons.logout),
                 onPressed: (BuildContext context) => {}),
