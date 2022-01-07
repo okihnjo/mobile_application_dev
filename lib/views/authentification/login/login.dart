@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:saloon_app/views/tab_containter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -15,10 +17,14 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  GlobalKey<FormState> _formKeyRegistration = GlobalKey<FormState>();
   FirebaseAuth auth = FirebaseAuth.instance;
   final email = TextEditingController();
   final passwordController = TextEditingController();
-
+  String _userEmail = '';
+  String _username = '';
+  String _userPassword = '';
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -91,16 +97,17 @@ class _LoginState extends State<Login> {
                           height: 100,
                           child: Column(
                             children: <Widget>[
-                              const TabBar(
+                              TabBar(
+                                onTap: (int index) => {setState(() {})},
                                 indicatorColor: Colors.green,
                                 labelColor: Colors.red,
                                 tabs: <Widget>[
                                   Tab(
-                                    text: "Privat person",
+                                    text: "Login",
                                     icon: Icon(Icons.person),
                                   ),
                                   Tab(
-                                    text: "Company",
+                                    text: "Registration",
                                     icon: Icon(Icons.architecture_sharp),
                                   )
                                 ],
@@ -109,7 +116,7 @@ class _LoginState extends State<Login> {
                                 child: TabBarView(
                                   children: <Widget>[
                                     buildTabs(0, _formKey),
-                                    buildTabs(1, _formKey)
+                                    buildTabs(1, _formKeyRegistration)
                                   ],
                                 ),
                               ),
@@ -120,12 +127,12 @@ class _LoginState extends State<Login> {
                     ),
                   ]),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 2.0),
-                  child: Center(
-                    child: Text("Already have an account? LogIn!"),
-                  ),
-                ),
+                // const Padding(
+                //   padding: EdgeInsets.only(bottom: 2.0),
+                //   child: Center(
+                //     child: Text("Already have an account? LogIn!"),
+                //   ),
+                // ),
               ]),
         ),
       ),
@@ -134,71 +141,110 @@ class _LoginState extends State<Login> {
 
   Widget buildTabs(int flag, GlobalKey<FormState> _passedFormKey) {
     return Container(
-      // decoration: BoxDecoration(
-      //     border: Border.all(
-      //         color: Colors.deepOrange, width: 4)),
       padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-            child: TextField(
-                controller: email,
-                decoration: const InputDecoration(
-                  filled: true,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  hintText: 'Username',
-                  prefixIcon: Icon(Icons.email),
+      child: Form(
+        key: _passedFormKey,
+        child: Column(
+          children: [
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                child: TextFormField(
+                  onSaved: (value) {
+                    _userEmail = value as String;
+                  },
+                  validator: (value) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        !value.contains('@')) {
+                      return "Please enter a valid email address";
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(labelText: "Email address"),
                 )),
-          ),
-          if (flag != 0)
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  prefixIcon: Icon(Icons.post_add_rounded),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  hintText: 'Postalcode',
-                ),
-              ),
-            ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-            child: TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                filled: true,
-                prefixIcon: Icon(Icons.password_sharp),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                hintText: 'Password',
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(12),
-            // color: Colors.red,
-            width: 320,
-            // alignment: Alignment.center,
-            child: ElevatedButton(
-                onPressed: () {
-                  signIn(email.text, passwordController.text);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ContainerPage(title: "SaloonApp")));
+            if (flag != 0)
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                  child: TextFormField(
+                    onSaved: (value) {
+                      _username = value as String;
+                    },
+                    decoration: InputDecoration(labelText: "Username"),
+                  )),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+              child: TextFormField(
+                onSaved: (value) {
+                  _userPassword = value as String;
                 },
-                // onPressed: () => {
-                //       // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //       //     builder: (BuildContext context) =>
-                //       //         ContainerPage(title: "SaloonApp")))
-                //       print(email.text + " und PW" + passwordController.text)
-                //     },
-                child: Text("SignUp")),
-          ),
-        ],
+                validator: (value) {
+                  if (value == null || value.isEmpty || value.length < 7) {
+                    return "Password must be at least 7 charachters long";
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(labelText: "Password"),
+                obscureText: true,
+              ),
+              // child: TextField(
+              //   controller: passwordController,
+              //   decoration: const InputDecoration(
+              //     filled: true,
+              //     prefixIcon: Icon(Icons.password_sharp),
+              //     border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.all(Radius.circular(10))),
+              //     hintText: 'Password',
+              //   ),
+              // ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(12),
+              // color: Colors.red,
+              width: 320,
+              // alignment: Alignment.center,
+              child: ElevatedButton(
+                  onPressed: () async {
+                    final isValid = _passedFormKey.currentState?.validate();
+                    FocusScope.of(context).unfocus();
+                    if (isValid == true) {
+                      _passedFormKey.currentState?.save();
+                      var authResult;
+                      try {
+                        if (flag == 0) {
+                          // call login
+                          authResult = await auth.signInWithEmailAndPassword(
+                              email: _userEmail, password: _userPassword);
+                          print('authResult');
+                        } else {
+                          authResult =
+                              await auth.createUserWithEmailAndPassword(
+                                  email: _userEmail, password: _userPassword);
+
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(authResult.user.uid)
+                              .set(
+                                  {'username': _username, 'email': _userEmail});
+                        }
+                      } on PlatformException catch (err) {
+                        var message = "An Error occured";
+                      }
+                      print("everything worked");
+                    }
+                  },
+                  //   signIn(email.text, passwordController.text);
+                  //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //       builder: (BuildContext context) =>
+                  //           ContainerPage(title: "SaloonApp")));
+                  // },
+                  child: Text("SignUp")),
+            ),
+          ],
+        ),
       ),
     );
   }

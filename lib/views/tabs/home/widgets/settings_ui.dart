@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:settings_ui/settings_ui.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SettingsUi extends StatelessWidget {
   const SettingsUi({Key? key}) : super(key: key);
@@ -95,7 +96,8 @@ class SettingsUi extends StatelessWidget {
                 title: 'SignOut',
                 // subtitle: 'English',
                 leading: Icon(Icons.logout),
-                onPressed: (BuildContext context) => {}),
+                onPressed: (BuildContext context) =>
+                    {FirebaseAuth.instance.signOut()}),
           ],
         ),
       ],
