@@ -53,6 +53,14 @@ class _ContainerPage extends State<ContainerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(Icons.add),
+              )),
+        ],
         title: Text(widget._pages[_selectedPageIndex]['title'] as String),
         automaticallyImplyLeading: false,
       ),

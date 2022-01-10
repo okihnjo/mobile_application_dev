@@ -42,6 +42,8 @@ dependencies:
   firebase_core: ^1.10.6
   firebase_auth: ^3.3.4
   cloud_firestore: ^3.1.5
+  chat_bubbles: ^1.1.0
+  contacts_service: ^0.6.3
 
 dev_dependencies:
   flutter_test:

@@ -10,4 +10,12 @@ class MessageService {
         .snapshots();
     return something;
   }
+
+  Stream getMessagesForSingleChat() {
+    var chats_future = FirebaseFirestore.instance
+        .collection('chat')
+        .orderBy('createdAt', descending: true)
+        .snapshots();
+    return chats_future;
+  }
 }
