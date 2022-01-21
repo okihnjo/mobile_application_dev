@@ -18,4 +18,7 @@ class MessageService {
         .snapshots();
     return chats_future;
   }
+
+  // getChats() {
+  // final chats = http.get(uri/chats, header: token)}
 }

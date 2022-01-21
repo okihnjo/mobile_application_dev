@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saloon_app/providers/theme_provider.dart';
 import 'package:saloon_app/views/authentification/login/login.dart';
 import 'package:saloon_app/views/tabs/chat/chat_screen.dart';
 import 'package:saloon_app/views/tabs/chat/widgets/in_chat_screen/in_chat_screen.dart';
@@ -30,28 +31,35 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (ctx, userSnapshot) {
-            if (userSnapshot.hasData) {
-              return ContainerPage(
-                title: 'Hello User',
-              );
-            }
-            return Login();
-          }),
-      routes: {
-        Login.routeName: (ctx) => const Login(),
-        '/chat': (ctx) => const InChatScreen(),
-        ContainerPage.routeName: (ctx) =>
-            ContainerPage(title: 'Flutter Demo Home Page')
-      },
-      // initialRoute: Login.routeName,
-    );
+    return Consumer(
+        builder: (context, ref, _) => MaterialApp(
+              title: 'Flutter Demo',
+              theme: ref.watch(theme),
+              darkTheme: ref.watch(darkTheme),
+              themeMode: ref.watch(changeTheme).darkMode
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+              /* ThemeMode.system to follow system theme, 
+         ThemeMode.light for light theme, 
+         ThemeMode.dark for dark theme
+      */
+              home: StreamBuilder(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (ctx, userSnapshot) {
+                    if (userSnapshot.hasData) {
+                      return ContainerPage(
+                        title: 'Hello User',
+                      );
+                    }
+                    return Login();
+                  }),
+              routes: {
+                Login.routeName: (ctx) => const Login(),
+                '/chat': (ctx) => const InChatScreen(),
+                ContainerPage.routeName: (ctx) =>
+                    ContainerPage(title: 'Flutter Demo Home Page')
+              },
+              // initialRoute: Login.routeName,
+            ));
   }
 }

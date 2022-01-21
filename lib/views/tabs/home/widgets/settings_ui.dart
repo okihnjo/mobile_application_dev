@@ -1,12 +1,16 @@
 import "package:flutter/material.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:saloon_app/providers/theme_provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class SettingsUi extends StatelessWidget {
+class SettingsUi extends ConsumerWidget {
   const SettingsUi({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final isDarkMode = ref.read(changeTheme).darkMode;
+    final theme = Theme.of(context);
     return SettingsList(
       // shrinkWrap: true,
       // contentPadding: EdgeInsets.only(top: 25),
@@ -48,11 +52,17 @@ class SettingsUi extends StatelessWidget {
               leading: Icon(Icons.language),
               onPressed: (BuildContext context) {},
             ),
-            SettingsTile(
-              title: 'Theme',
-              trailing: Icon(Icons.arrow_forward_ios),
-              leading: Icon(Icons.bedtime_rounded),
-              onPressed: (BuildContext context) {},
+            SettingsTile.switchTile(
+              leading: Icon(Icons.format_paint),
+              title: "Theme",
+              onToggle: (val) {
+                if (isDarkMode) {
+                  ref.read(changeTheme.notifier).enableLightMode();
+                } else {
+                  ref.read(changeTheme.notifier).enableDarkMode();
+                }
+              },
+              switchValue: ref.read(changeTheme).darkMode,
             ),
             SettingsTile(
               title: 'Premium',

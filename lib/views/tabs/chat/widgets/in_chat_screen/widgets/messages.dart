@@ -18,7 +18,9 @@ class Messages extends ConsumerWidget {
                 child: BubbleNormal(
                   text: value.docs[index]['text'],
                   isSender: value.docs[index]['userId'] == uid,
-                  color: Color(0xFF1B97F3),
+                  color: value.docs[index]['userId'] == uid
+                      ? Colors.green
+                      : Colors.blue,
                   tail: true,
                   textStyle: const TextStyle(
                     fontSize: 20,

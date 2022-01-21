@@ -6,3 +6,13 @@ final getChatsFutureProvider = FutureProvider.autoDispose((ref) async {
   final getChatsService = UserService.instance;
   return await getChatsService.getChats();
 });
+
+final getContactsProvider = FutureProvider((ref) async {
+  final userService = UserService.instance;
+  return await userService.getContactList();
+});
+
+final getMeFutureProvider = FutureProvider.family((ref, String? uid) async {
+  final getMeService = UserService.instance;
+  return await getMeService.getMe('users/$uid');
+});

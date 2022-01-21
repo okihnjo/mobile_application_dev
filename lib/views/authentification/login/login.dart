@@ -227,8 +227,11 @@ class _LoginState extends State<Login> {
                           await FirebaseFirestore.instance
                               .collection('users')
                               .doc(authResult.user.uid)
-                              .set(
-                                  {'username': _username, 'email': _userEmail});
+                              .set({
+                            'username': _username,
+                            'email': _userEmail,
+                            'userId': authResult.user.uid
+                          });
                         }
                       } on PlatformException catch (err) {
                         var message = "An Error occured";
@@ -241,7 +244,7 @@ class _LoginState extends State<Login> {
                   //       builder: (BuildContext context) =>
                   //           ContainerPage(title: "SaloonApp")));
                   // },
-                  child: Text("SignUp")),
+                  child: Text(flag == 0 ? "Login" : "SignIn")),
             ),
           ],
         ),
