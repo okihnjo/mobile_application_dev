@@ -14,5 +14,5 @@ final getContactsProvider = FutureProvider((ref) async {
 
 final getMeFutureProvider = FutureProvider.family((ref, String? uid) async {
   final getMeService = UserService.instance;
-  return await getMeService.getMe('users/$uid');
+  return await getMeService.getMe(uid);
 });

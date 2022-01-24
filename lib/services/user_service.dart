@@ -22,7 +22,7 @@ class UserService with ChangeNotifier {
   }
 
   getMe(String? uid) async {
-    var me = FirebaseFirestore.instance.collection('users/$uid').snapshots();
+    var me = FirebaseFirestore.instance.collection('users').doc('$uid').get();
     return me;
   }
 

@@ -19,23 +19,27 @@ class ProfileScreen extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      ClipOval(
-                          child: Material(
-                              child: Ink.image(
-                        image: NetworkImage(
-                            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJhbmRvbSUyMHBlb3BsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60"),
-                        height: 128,
-                        width: 128,
-                        child: InkWell(
-                          onTap: () {},
+                      Stack(
+                        children :[ ClipOval(
+                            child: Material(
+                                child: Ink.image(
+                          image: NetworkImage(
+                              data.data()["profilePicture"].toString()),
+                          height: 128,
+                          width: 128,
+                          fit: BoxFit.cover,
+                          child: InkWell(
+                            onTap: () {},
+                          ),
+                        ))),buildEditIcon()], 
                         ),
-                      ))),
                       SizedBox(width: 15),
                       Column(
                         children: [
-                          Text("Eve"),
+                          Text(data.data()["name"] + " " + data.data()["surname"],
+                          style: TextStyle(fontSize: 25) ,),
                           Text(
-                            "Fashion Model",
+                            data.data()["status"],
                             style: TextStyle(color: Colors.grey, fontSize: 20),
                           )
                         ],
@@ -51,26 +55,26 @@ class ProfileScreen extends ConsumerWidget {
                       Expanded(
                           child: Card(
                               child: ListTile(
-                        leading: Icon(Icons.favorite),
-                        title: Text("Your Favorites"),
+                        leading: Icon(Icons.mail),
+                        title: Text(data.data()["email"]),
                       ))),
                       Expanded(
                           child: Card(
                               child: ListTile(
                         leading: Icon(Icons.payment),
-                        title: Text("Payment"),
+                        title: Text(data.data()["name"]),
                       ))),
                       Expanded(
                           child: Card(
                               child: ListTile(
                         leading: Icon(Icons.people_alt),
-                        title: Text("Tell Your Friend"),
+                        title: Text(data.data()["surname"]),
                       ))),
                       Expanded(
                           child: Card(
                               child: ListTile(
-                        leading: Icon(Icons.label_important),
-                        title: Text("Promotions"),
+                        leading: Icon(Icons.phone),
+                        title: Text(data.data()["phoneNumber"].toString()),
                       ))),
                       Expanded(
                           child: Card(
@@ -90,4 +94,10 @@ class ProfileScreen extends ConsumerWidget {
           return Text("Error");
         });
   }
+  Widget buildEditIcon () => Icon(
+    Icons.edit,
+    size: 15,
+
+
+  );
 }

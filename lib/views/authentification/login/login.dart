@@ -25,6 +25,9 @@ class _LoginState extends State<Login> {
   String _userEmail = '';
   String _username = '';
   String _userPassword = '';
+  String _name = '';
+  String _surname = '';
+  String _phoneNumber = '';
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -54,199 +57,254 @@ class _LoginState extends State<Login> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: MediaQuery.of(context).size.width,
-            minHeight: MediaQuery.of(context).size.height,
-          ),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 180.0,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.vertical(
-                        bottom: Radius.elliptical(
-                            MediaQuery.of(context).size.width, 100.0)),
-                  ),
-                  alignment: Alignment.center,
-                  child: Container(
-                    child: const Icon(
-                      Icons.flutter_dash,
-                      size: 100,
+        
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 180.0,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.vertical(
+                          bottom: Radius.elliptical(
+                              MediaQuery.of(context).size.width, 100.0)),
+                    ),
+                    alignment: Alignment.center,
+                    child: Container(
+                      child: const Icon(
+                        Icons.flutter_dash,
+                        size: 100,
+                      ),
                     ),
                   ),
-                ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                Container(
-                  // color: Colors.blueAccent,
-                  height: 450,
-                  child: Column(children: [
-                    Text(
-                      "Saloon",
-                      style: GoogleFonts.irishGrover(),
-                      textScaleFactor: 2,
-                    ),
-                    Expanded(
-                      child: DefaultTabController(
-                        length: 2,
-                        child: SizedBox(
-                          height: 100,
-                          child: Column(
-                            children: <Widget>[
-                              TabBar(
-                                onTap: (int index) => {setState(() {})},
-                                indicatorColor: Colors.green,
-                                labelColor: Colors.red,
-                                tabs: <Widget>[
-                                  Tab(
-                                    text: "Login",
-                                    icon: Icon(Icons.person),
-                                  ),
-                                  Tab(
-                                    text: "Registration",
-                                    icon: Icon(Icons.architecture_sharp),
-                                  )
-                                ],
-                              ),
-                              Expanded(
-                                child: TabBarView(
-                                  children: <Widget>[
-                                    buildTabs(0, _formKey),
-                                    buildTabs(1, _formKeyRegistration)
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  Container(
+                    // color: Colors.blueAccent,
+                    height: 450,
+                    child: Column(children: [
+                      Text(
+                        "Saloon",
+                        style: GoogleFonts.irishGrover(),
+                        textScaleFactor: 2,
+                      ),
+                      Expanded(
+                        child: DefaultTabController(
+                          length: 2,
+                          child: SizedBox(
+                            height: 100,
+                            child: Column(
+                              children: <Widget>[
+                                TabBar(
+                                  onTap: (int index) => {setState(() {})},
+                                  indicatorColor: Colors.green,
+                                  labelColor: Colors.red,
+                                  tabs: <Widget>[
+                                    Tab(
+                                      text: "Login",
+                                      icon: Icon(Icons.person),
+                                    ),
+                                    Tab(
+                                      text: "Registration",
+                                      icon: Icon(Icons.architecture_sharp),
+                                    )
                                   ],
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  child: TabBarView(
+                                    children: <Widget>[
+                                      buildTabs(0, _formKey),
+                                      buildTabs(1, _formKeyRegistration)
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ]),
-                ),
-                // const Padding(
-                //   padding: EdgeInsets.only(bottom: 2.0),
-                //   child: Center(
-                //     child: Text("Already have an account? LogIn!"),
-                //   ),
-                // ),
-              ]),
-        ),
+                    ]),
+                  ),
+                  // const Padding(
+                  //   padding: EdgeInsets.only(bottom: 2.0),
+                  //   child: Center(
+                  //     child: Text("Already have an account? LogIn!"),
+                  //   ),
+                  // ),
+                ]),
+          
+        
       ),
     );
   }
 
   Widget buildTabs(int flag, GlobalKey<FormState> _passedFormKey) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: Form(
-        key: _passedFormKey,
-        child: Column(
-          children: [
-            Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                child: TextFormField(
-                  onSaved: (value) {
-                    _userEmail = value as String;
-                  },
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !value.contains('@')) {
-                      return "Please enter a valid email address";
-                    }
-                    return null;
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(labelText: "Email address"),
-                )),
-            if (flag != 0)
-              Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Form(
+          key: _passedFormKey,
+            child: Column(
+              children: [
+                Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    child: TextFormField(
+                      onSaved: (value) {
+                        _userEmail = value as String;
+                      },
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            !value.contains('@')) {
+                          return "Please enter a valid email address";
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(labelText: "Email address"),
+                    )),
+                if (flag != 0)
+                  Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      child: TextFormField(
+                        onSaved: (value) {
+                          _username = value as String;
+                        },
+                        decoration: InputDecoration(labelText: "Username"),
+                      )),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: TextFormField(
                     onSaved: (value) {
-                      _username = value as String;
+                      _userPassword = value as String;
                     },
-                    decoration: InputDecoration(labelText: "Username"),
-                  )),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              child: TextFormField(
-                onSaved: (value) {
-                  _userPassword = value as String;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty || value.length < 7) {
-                    return "Password must be at least 7 charachters long";
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(labelText: "Password"),
-                obscureText: true,
-              ),
-              // child: TextField(
-              //   controller: passwordController,
-              //   decoration: const InputDecoration(
-              //     filled: true,
-              //     prefixIcon: Icon(Icons.password_sharp),
-              //     border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.all(Radius.circular(10))),
-              //     hintText: 'Password',
-              //   ),
-              // ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(12),
-              // color: Colors.red,
-              width: 320,
-              // alignment: Alignment.center,
-              child: ElevatedButton(
-                  onPressed: () async {
-                    final isValid = _passedFormKey.currentState?.validate();
-                    FocusScope.of(context).unfocus();
-                    if (isValid == true) {
-                      _passedFormKey.currentState?.save();
-                      var authResult;
-                      try {
-                        if (flag == 0) {
-                          // call login
-                          authResult = await auth.signInWithEmailAndPassword(
-                              email: _userEmail, password: _userPassword);
-                          print('authResult');
-                        } else {
-                          authResult =
-                              await auth.createUserWithEmailAndPassword(
-                                  email: _userEmail, password: _userPassword);
-
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(authResult.user.uid)
-                              .set({
-                            'username': _username,
-                            'email': _userEmail,
-                            'userId': authResult.user.uid
-                          });
-                        }
-                      } on PlatformException catch (err) {
-                        var message = "An Error occured";
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length < 7) {
+                        return "Password must be at least 7 charachters long";
                       }
-                      print("everything worked");
-                    }
-                  },
-                  //   signIn(email.text, passwordController.text);
-                  //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //       builder: (BuildContext context) =>
-                  //           ContainerPage(title: "SaloonApp")));
-                  // },
-                  child: Text(flag == 0 ? "Login" : "SignIn")),
+                      return null;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(labelText: "Password"),
+                    obscureText: true,
+                  ),
+                  // child: TextField(
+                  //   controller: passwordController,
+                  //   decoration: const InputDecoration(
+                  //     filled: true,
+                  //     prefixIcon: Icon(Icons.password_sharp),
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.all(Radius.circular(10))),
+                  //     hintText: 'Password',
+                  //   ),
+                  // ),
+                ),
+                if(flag != 0) Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    child: TextFormField(
+                      onSaved: (value) {
+                        _name = value as String;
+                      },
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty) {
+                          return "Please enter a valid name";
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(labelText: "Name"),
+                    )),
+                    if(flag != 0) Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    child: TextFormField(
+                      onSaved: (value) {
+                        _surname = value as String;
+                      },
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty) {
+                          return "Please enter a valid surname";
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(labelText: "Surname"),
+                    )),
+                    if(flag != 0) Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    child: TextFormField(
+                      onSaved: (value) {
+                        _phoneNumber = value as String;
+                      },
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty) {
+                          return "Please enter a valid phonenumber";
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(labelText: "Phonenumber"),
+                    )),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  // color: Colors.red,
+                  width: 320,
+                  // alignment: Alignment.center,
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        final isValid = _passedFormKey.currentState?.validate();
+                        FocusScope.of(context).unfocus();
+                        if (isValid == true) {
+                          _passedFormKey.currentState?.save();
+                          var authResult;
+                          try {
+                            if (flag == 0) {
+                              // call login
+                              authResult = await auth.signInWithEmailAndPassword(
+                                  email: _userEmail, password: _userPassword);
+                              print('authResult');
+                            } else {
+                              authResult =
+                                  await auth.createUserWithEmailAndPassword(
+                                      email: _userEmail, password: _userPassword);
+          
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(authResult.user.uid)
+                                  .set({
+                                'username': _username,
+                                'email': _userEmail,
+                                'userId': authResult.user.uid,
+                                'name': _name,
+                                'surname': _surname,
+                                'phoneNumber': _phoneNumber,
+                                'status': '',
+                                'profilePicture': '',
+                              });
+                            }
+                          } on PlatformException catch (err) {
+                            var message = "An Error occured";
+                          }
+                          print("everything worked");
+                        }
+                      },
+                      //   signIn(email.text, passwordController.text);
+                      //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      //       builder: (BuildContext context) =>
+                      //           ContainerPage(title: "SaloonApp")));
+                      // },
+                      child: Text(flag == 0 ? "Login" : "SignIn")),
+                ),
+              ],
             ),
-          ],
         ),
       ),
     );
