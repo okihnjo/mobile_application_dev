@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:saloon_app/providers/theme_provider.dart';
+import 'package:saloon_app/views/tabs/home/widgets/settings_details/faq.dart';
+import 'package:saloon_app/views/tabs/home/widgets/settings_details/privacy.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -38,7 +40,9 @@ class SettingsUi extends ConsumerWidget {
               trailing: Icon(Icons.arrow_forward_ios),
               // subtitle: 'English',
               leading: Icon(Icons.lock_outline_sharp),
-              onPressed: (BuildContext context) {},
+              onPressed: (BuildContext context) {
+                Navigator.of(context).pushNamed(Privacy.routeName);
+              },
             ),
           ],
         ),
@@ -81,7 +85,9 @@ class SettingsUi extends ConsumerWidget {
               // subtitle: 'English',
               leading: Icon(Icons.question_answer_rounded),
               trailing: Icon(Icons.arrow_forward_ios),
-              onPressed: (BuildContext context) {},
+              onPressed: (BuildContext context) {
+                Navigator.of(context).pushNamed(FAQ.routeName);
+              },
             ),
             SettingsTile(
               title: 'Bugs',

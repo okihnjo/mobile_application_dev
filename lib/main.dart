@@ -8,6 +8,8 @@ import 'package:saloon_app/views/tab_containter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:saloon_app/views/tabs/home/widgets/settings_details/faq.dart';
+import 'package:saloon_app/views/tabs/home/widgets/settings_details/privacy.dart';
 
 // import 'firebase_options.dart';
 void main() async {
@@ -56,6 +58,8 @@ class _MyAppState extends State<MyApp> {
               routes: {
                 Login.routeName: (ctx) => const Login(),
                 '/chat': (ctx) => const InChatScreen(),
+                Privacy.routeName: (ctx) => const Privacy(),
+                FAQ.routeName: (ctx) => const FAQ(),
                 ContainerPage.routeName: (ctx) =>
                     ContainerPage(title: 'Flutter Demo Home Page')
               },

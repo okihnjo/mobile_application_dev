@@ -8,6 +8,7 @@ class UserService with ChangeNotifier {
   UserService._();
   static final instance = UserService._();
 
+  bool? showPic;
   Future<User> getChats() async {
     final url = "https://randomuser.me/api/?results=10";
     final response = await Dio().get(url);
@@ -24,6 +25,31 @@ class UserService with ChangeNotifier {
   getMe(String? uid) async {
     var me = FirebaseFirestore.instance.collection('users').doc('$uid').get();
     return me;
+  }
+
+  getPictureStatus(String? uid) async {
+    bool picStatus;
+    var status = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((value) {
+      picStatus = value.data()?['showProfilePicture'];
+      showPic = picStatus;
+      return picStatus;
+    });
+    return status;
+  }
+
+  updatePictureStatus(String? uid, bool dec) {
+    Map<String, bool> updt = {'showProfilePicture': dec};
+    var status = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .update({'showProfilePicture': dec}).then((value) {
+      showPic = dec;
+      notifyListeners();
+    });
   }
 
   //Future<> updateMe(String ui) async {
