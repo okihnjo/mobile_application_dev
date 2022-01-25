@@ -1,7 +1,10 @@
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:saloon_app/providers/theme_provider.dart';
+import 'package:saloon_app/views/tabs/home/widgets/settings_details/about_us.dart';
+import 'package:saloon_app/views/tabs/home/widgets/settings_details/bugs.dart';
 import 'package:saloon_app/views/tabs/home/widgets/settings_details/faq.dart';
+import 'package:saloon_app/views/tabs/home/widgets/settings_details/premium.dart';
 import 'package:saloon_app/views/tabs/home/widgets/settings_details/privacy.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,13 +24,6 @@ class SettingsUi extends ConsumerWidget {
           titlePadding: const EdgeInsets.only(top: 25, left: 15, bottom: 15),
           title: 'Accountsecurity',
           tiles: [
-            SettingsTile(
-              title: 'Account',
-              trailing: Icon(Icons.arrow_forward_ios),
-              // subtitle: 'English',
-              leading: Icon(Icons.account_circle),
-              onPressed: (BuildContext context) {},
-            ),
             SettingsTile(
               title: 'Notifications',
               trailing: Icon(Icons.arrow_forward_ios),
@@ -50,12 +46,6 @@ class SettingsUi extends ConsumerWidget {
           titlePadding: EdgeInsets.all(15),
           title: 'App-Settings',
           tiles: [
-            SettingsTile(
-              title: 'Language',
-              trailing: Icon(Icons.arrow_forward_ios),
-              leading: Icon(Icons.language),
-              onPressed: (BuildContext context) {},
-            ),
             SettingsTile.switchTile(
               leading: Icon(Icons.format_paint),
               title: "Theme",
@@ -72,7 +62,9 @@ class SettingsUi extends ConsumerWidget {
               title: 'Premium',
               trailing: Icon(Icons.arrow_forward_ios),
               leading: Icon(Icons.verified_user),
-              onPressed: (BuildContext context) {},
+              onPressed: (BuildContext context) {
+                Navigator.of(context).pushNamed(Premium.routeName);
+              },
             ),
           ],
         ),
@@ -94,14 +86,18 @@ class SettingsUi extends ConsumerWidget {
               // subtitle: 'English',
               leading: Icon(Icons.bug_report),
               trailing: Icon(Icons.arrow_forward_ios),
-              onPressed: (BuildContext context) {},
+              onPressed: (BuildContext context) {
+                Navigator.of(context).pushNamed(Bugs.routeName);
+              },
             ),
             SettingsTile(
-              title: 'Feedback',
+              title: 'About us',
               // subtitle: 'English',
               leading: Icon(Icons.feedback),
               trailing: Icon(Icons.arrow_forward_ios),
-              onPressed: (BuildContext context) {},
+              onPressed: (BuildContext context) {
+                Navigator.of(context).pushNamed(AboutUs.routeName);
+              },
             ),
           ],
         ),
