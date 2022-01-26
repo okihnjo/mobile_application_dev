@@ -4,9 +4,10 @@ import 'package:saloon_app/providers/messages_provider.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 
 class Messages extends ConsumerWidget {
-  const Messages({Key? key, this.uid}) : super(key: key);
+  const Messages({Key? key, this.uid, this.user}) : super(key: key);
 
   final String? uid;
+  final user;
   @override
   Widget build(BuildContext context, ref) {
     final stream = ref.watch(getSingleMessageProvider);

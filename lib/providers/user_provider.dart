@@ -13,9 +13,16 @@ final getContactsProvider = FutureProvider((ref) async {
   return await userService.getContactList();
 });
 
-final getMeFutureProvider = FutureProvider.family((ref, String? uid) async {
+final getMeFutureProvider =
+    FutureProvider.autoDispose.family((ref, String? uid) async {
   final getMeService = UserService.instance;
+  ref.maintainState = true;
   return await getMeService.getMe(uid);
+});
+
+final getPhoneNumbersProvider = FutureProvider((ref) async {
+  final userService = UserService.instance;
+  return await userService.getAllMembers();
 });
 
 final getPictureStatusProvider =
@@ -27,3 +34,6 @@ final getPictureStatusProvider =
 final userProvider = ChangeNotifierProvider((ref) {
   return UserService.instance; // why is using autoDispose crashing the app?
 });
+
+final getChatsStreamProvider = StreamProvider.autoDispose
+    .family((ref, String? uid) => UserService.instance.getMyChats(uid));

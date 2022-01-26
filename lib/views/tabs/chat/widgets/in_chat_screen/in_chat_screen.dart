@@ -11,13 +11,18 @@ import 'package:saloon_app/views/tabs/chat/widgets/in_chat_screen/widgets/messag
 
 class InChatScreen extends ConsumerWidget {
   const InChatScreen({Key? key}) : super(key: key);
+  // final Object partner;
 
   @override
   Widget build(BuildContext context, ref) {
+    final routeArgs = ModalRoute.of(context)?.settings.arguments as Map;
+    final user = routeArgs['user'];
     final currentUser = FirebaseAuth.instance.currentUser;
     final stream = ref.watch(getMessagesProvider);
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text(user['username']),
+        ),
         body: Container(
           child: Column(
             children: [
@@ -26,7 +31,10 @@ class InChatScreen extends ConsumerWidget {
                   uid: currentUser?.uid,
                 ),
               ),
-              InputBar(uid: currentUser?.uid)
+              InputBar(
+                uid: currentUser?.uid,
+                user: user,
+              )
             ],
           ),
         ));

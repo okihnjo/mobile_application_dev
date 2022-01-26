@@ -23,7 +23,8 @@ class UserService with ChangeNotifier {
   }
 
   getMe(String? uid) async {
-    var me = FirebaseFirestore.instance.collection('users').doc('$uid').get();
+    var me =
+        await FirebaseFirestore.instance.collection('users').doc('$uid').get();
     return me;
   }
 
@@ -50,6 +51,28 @@ class UserService with ChangeNotifier {
       showPic = dec;
       notifyListeners();
     });
+  }
+
+  getAllMembers() {
+    var numbers = [];
+    final members =
+        FirebaseFirestore.instance.collection('users').get().then((value) {
+      for (var i = 0; i < value.docs.length; i++) {
+        var doc = value.docs[i];
+        numbers.add(doc.data());
+      }
+      return numbers;
+    });
+    return members;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getMyChats(String? uid) {
+    final chats = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('messages')
+        .snapshots();
+    return chats;
   }
 
   //Future<> updateMe(String ui) async {

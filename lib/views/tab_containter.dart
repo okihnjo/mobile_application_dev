@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:saloon_app/main.dart';
@@ -89,6 +90,8 @@ class _ContainerPage extends State<ContainerPage> {
     }
   }
 
+  Object? user;
+
   displayContacts() {
     return showModalBottomSheet<void>(
       context: context,
@@ -109,9 +112,38 @@ class _ContainerPage extends State<ContainerPage> {
                       data: (data) {
                         return Expanded(
                           child: ListView.separated(
-                              itemBuilder: (ctx, i) => ListTile(
-                                    title: Text(data[i].displayName as String),
-                                  ),
+                              itemBuilder: (ctx, i) {
+                                return FutureBuilder<Object>(
+                                    future: checkIfUserHasApp(
+                                        data[i].phones?[0].value as String),
+                                    builder: (context, snap) {
+                                      if (snap.hasData) {
+                                        return ListTile(
+                                            trailing: (snap.data
+                                                    as Map)['hasApp'] as bool
+                                                ? IconButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      Navigator.of(context)
+                                                          .pushNamed('/chat',
+                                                              arguments: {
+                                                            'user': (snap.data
+                                                                as Map)['user']
+                                                          });
+                                                    },
+                                                    icon: Icon(Icons.send))
+                                                : Text(''),
+                                            title: Text(
+                                                data[i].displayName as String),
+                                            subtitle: Text((snap.data
+                                                    as Map)['hasApp'] as bool
+                                                ? 'Hat'
+                                                : 'Hat nicht'));
+                                      } else {
+                                        return Text("Loading");
+                                      }
+                                    });
+                              },
                               separatorBuilder: (context, index) {
                                 return Divider();
                               },
@@ -136,6 +168,20 @@ class _ContainerPage extends State<ContainerPage> {
         });
       },
     );
+  }
+
+  Future<Object> checkIfUserHasApp(String contact_person_number) async {
+    final user = UserService.instance;
+    final results = await user.getAllMembers();
+    for (var i = 0; i < results.length; i++) {
+      if (results[i]['phoneNumber'].replaceAll(' ', '') ==
+          contact_person_number.replaceAll(' ', '')) {
+        return {'hasApp': true, 'user': results[i]};
+      } else {
+        return {'hasApp': false};
+      }
+    }
+    return {'hasApp': false};
   }
 
   @override
