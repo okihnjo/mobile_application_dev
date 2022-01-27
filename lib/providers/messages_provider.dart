@@ -7,3 +7,7 @@ final getMessagesProvider =
 
 final getSingleMessageProvider = StreamProvider.autoDispose(
     (ref) => MessageService.instance.getMessagesForSingleChat());
+
+final getSingleMessageProvider_2 = StreamProvider.autoDispose.family(
+    (ref, String? partnerUid) =>
+        MessageService.instance.getMessagesWithPartner(partnerUid));

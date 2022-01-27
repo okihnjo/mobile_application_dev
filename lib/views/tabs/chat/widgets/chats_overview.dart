@@ -19,7 +19,8 @@ class ChatsOverview extends ConsumerWidget {
                   child: ListView.separated(
                   itemCount: value.docs.length,
                   itemBuilder: (ctx, i) => ChatTile(
-                    name: value.docs[i].data()['chattingWith'],
+                    user: value.docs[i].data(),
+                    name: value.docs[i].data()['username'],
                     pictureUrl: '',
                   ),
                   separatorBuilder: (context, index) {
@@ -33,25 +34,5 @@ class ChatsOverview extends ConsumerWidget {
         loading: () => const Center(
               child: CircularProgressIndicator(),
             ));
-    /*   return chatsProvider.when(
-        data: (data) {
-          return Expanded(
-              child: ListView.separated(
-            itemCount: data.results.length,
-            itemBuilder: (ctx, i) => ChatTile(
-              name: (data.results[i].name?.first as String) +
-                  ' ' +
-                  (data.results[i].name?.last as String),
-              pictureUrl: data.results[i].picture?.medium,
-            ),
-            separatorBuilder: (context, index) {
-              return Divider();
-            },
-          ));
-        },
-        loading: () => CircularProgressIndicator(),
-        error: (_, __) {
-          return const Text('Ein Fehler beim Laden der Chats');
-        }); */
   }
 }

@@ -15,10 +15,9 @@ class InChatScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final routeArgs = ModalRoute.of(context)?.settings.arguments as Map;
-    final user = routeArgs['user'];
+    final routeArgs = ModalRoute.of(context)?.settings.arguments as Map?;
+    final user = routeArgs?['user'];
     final currentUser = FirebaseAuth.instance.currentUser;
-    final stream = ref.watch(getMessagesProvider);
     return Scaffold(
         appBar: AppBar(
           title: Text(user['username']),
@@ -29,6 +28,7 @@ class InChatScreen extends ConsumerWidget {
               Expanded(
                 child: Messages(
                   uid: currentUser?.uid,
+                  user: user,
                 ),
               ),
               InputBar(

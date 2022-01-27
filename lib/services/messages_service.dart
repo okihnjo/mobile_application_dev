@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MessageService {
   MessageService._();
@@ -17,6 +18,18 @@ class MessageService {
         .orderBy('createdAt', descending: true)
         .snapshots();
     return chats_future;
+  }
+
+  Stream getMessagesWithPartner(String? partnerUid) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    var messages = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser?.uid)
+        .collection('chats')
+        .doc(partnerUid)
+        .collection('messages')
+        .snapshots();
+    return messages;
   }
 
   // getChats() {

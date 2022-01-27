@@ -20,31 +20,47 @@ class _InputBarState extends ConsumerState<InputBar> {
 
   void _sendMessage(data) {
     FocusScope.of(context).unfocus();
-
-    FirebaseFirestore.instance
+    FirebaseFirestore.instance // my collection
         .collection('users')
+        .doc(widget.uid)
+        .collection('chats')
+        .doc(widget.user['userId'])
+        .collection('messages')
+        .add({
+      'text': _enteredMessage,
+      'createdAt': Timestamp.now(),
+      'userId': widget.user['userId'],
+      'received': false,
+      'username': widget.user['username']
+    });
+    FirebaseFirestore.instance // my collection
+        .collection('users')
+        .doc(widget.uid)
+        .collection('chats')
+        .doc(widget.user['userId'])
+        .set({
+      'userId': widget.user['userId'],
+      'username': widget.user['username']
+    });
+    FirebaseFirestore.instance // his/her collection
+        .collection('users')
+        .doc(widget.user['userId'])
+        .collection('chats')
         .doc(widget.uid)
         .collection('messages')
         .add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
-      'myUserId': widget.uid,
-      'receiverUserId': widget.user['receiverUid'],
-      'received': false,
-      'chattingWith': widget.user['username']
+      'userId': widget.uid, // nicht meine
+      'received': true,
+      'username': data['username']
     });
     FirebaseFirestore.instance
         .collection('users')
-        .doc(widget.user['receiverUid'])
-        .collection('messages')
-        .add({
-      'text': _enteredMessage,
-      'createdAt': Timestamp.now(),
-      'myUserId': widget.user['receiverUid'],
-      'receiverUserId': widget.uid,
-      'received': true,
-      'chattingWith': data['username']
-    });
+        .doc(widget.user['userId'])
+        .collection('chats')
+        .doc(widget.uid)
+        .set({'userId': widget.uid, 'username': data['username']});
     _controller.clear();
   }
 

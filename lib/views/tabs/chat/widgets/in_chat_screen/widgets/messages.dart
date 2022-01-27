@@ -10,8 +10,10 @@ class Messages extends ConsumerWidget {
   final user;
   @override
   Widget build(BuildContext context, ref) {
-    final stream = ref.watch(getSingleMessageProvider);
-    return stream.when(
+    // final stream = ref.watch(getSingleMessageProvider);
+    final message_stream =
+        ref.watch(getSingleMessageProvider_2(user['userId']));
+    return message_stream.when(
       data: (value) => ListView.builder(
           reverse: true,
           itemCount: value.docs.length,

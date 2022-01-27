@@ -10,8 +10,9 @@ import 'package:saloon_app/views/tabs/chat/widgets/chat_tile/widgets/chat_traili
 class ChatTile extends StatelessWidget {
   final name;
   final pictureUrl;
+  final user;
 
-  ChatTile({this.name, this.pictureUrl});
+  ChatTile({this.name, this.pictureUrl, this.user});
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -20,11 +21,8 @@ class ChatTile extends StatelessWidget {
         ),
         trailing: ChatTrailingInfo(),
         title: Text(name),
-        subtitle: Consumer(builder: (context, ref, child) {
-          final chatNP = ref.watch(getChatsFutureProvider);
-          return const Text('no Chats');
-        }),
-        onTap: () => Navigator.of(context).pushNamed('/chat'));
+        onTap: () => Navigator.of(context)
+            .pushNamed('/chat', arguments: {'user': user}));
   }
 }
 

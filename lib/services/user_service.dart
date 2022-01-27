@@ -70,7 +70,7 @@ class UserService with ChangeNotifier {
     final chats = FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
-        .collection('messages')
+        .collection('chats')
         .snapshots();
     return chats;
   }
