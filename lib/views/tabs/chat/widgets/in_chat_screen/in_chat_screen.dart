@@ -20,7 +20,48 @@ class InChatScreen extends ConsumerWidget {
     final currentUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
         appBar: AppBar(
-          title: Text(user['username']),
+          title: Row(
+            // mainAxisSize: MainAxisSize.min,
+            children: [
+              // ChatAvatar(picture: args.picture),
+              const SizedBox(width: 15),
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(user['username'], overflow: TextOverflow.clip),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.check_sharp, size: 16),
+                        const Icon(Icons.check_sharp, size: 16),
+                        const SizedBox(width: 5),
+                        Flexible(
+                          child: const Text(
+                            'Available',
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.phone,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.videocam),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: Container(
           child: Column(

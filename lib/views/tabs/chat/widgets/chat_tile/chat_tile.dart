@@ -19,8 +19,17 @@ class ChatTile extends StatelessWidget {
         leading: ChatAvatar(
           picture: this.pictureUrl,
         ),
-        trailing: ChatTrailingInfo(),
+        trailing: ChatTrailingInfo(
+          datetime: user['createdAt'],
+        ),
         title: Text(name),
+        subtitle: Text(
+          user['received']
+              ? user['lastMessage']
+              : "You: ${user['lastMessage']}",
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
         onTap: () => Navigator.of(context)
             .pushNamed('/chat', arguments: {'user': user}));
   }

@@ -71,6 +71,7 @@ class UserService with ChangeNotifier {
         .collection('users')
         .doc(uid)
         .collection('chats')
+        .orderBy('createdAt', descending: true)
         .snapshots();
     return chats;
   }

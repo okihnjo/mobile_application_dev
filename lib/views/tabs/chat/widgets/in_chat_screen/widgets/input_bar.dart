@@ -40,7 +40,10 @@ class _InputBarState extends ConsumerState<InputBar> {
         .doc(widget.user['userId'])
         .set({
       'userId': widget.user['userId'],
-      'username': widget.user['username']
+      'username': widget.user['username'],
+      'received': false,
+      'createdAt': Timestamp.now(),
+      'lastMessage': _enteredMessage
     });
     FirebaseFirestore.instance // his/her collection
         .collection('users')
@@ -60,7 +63,13 @@ class _InputBarState extends ConsumerState<InputBar> {
         .doc(widget.user['userId'])
         .collection('chats')
         .doc(widget.uid)
-        .set({'userId': widget.uid, 'username': data['username']});
+        .set({
+      'userId': widget.uid,
+      'username': data['username'],
+      'received': true,
+      'createdAt': Timestamp.now(),
+      'lastMessage': _enteredMessage
+    });
     _controller.clear();
   }
 
@@ -73,22 +82,48 @@ class _InputBarState extends ConsumerState<InputBar> {
               padding: EdgeInsets.all(8),
               child: Row(
                 children: [
+                  const IconButton(
+                      icon: Icon(Icons.attach_file), onPressed: null),
                   Expanded(
-                      child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(labelText: "Send a message..."),
-                    onChanged: (value) {
-                      setState(() {
-                        _enteredMessage = value;
-                      });
-                    },
+                      child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: const [
+                        BoxShadow(
+                            offset: Offset(0, 3),
+                            blurRadius: 5,
+                            color: Colors.grey)
+                      ],
+                    ),
+                    child: Row(children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _controller,
+                          decoration:
+                              InputDecoration(labelText: "Send a message..."),
+                          onChanged: (value) {
+                            setState(() {
+                              _enteredMessage = value;
+                            });
+                          },
+                        ),
+                      ),
+                      IconButton(icon: Icon(Icons.face), onPressed: () {}),
+                    ]),
                   )),
-                  IconButton(
-                      color: Colors.green,
-                      onPressed: _enteredMessage.trim().isEmpty
-                          ? null
-                          : () => _sendMessage(data.data()),
-                      icon: Icon(Icons.send))
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.green, shape: BoxShape.circle),
+                    child: IconButton(
+                        color: Colors.white,
+                        onPressed: _enteredMessage.trim().isEmpty
+                            ? null
+                            : () => _sendMessage(data.data()),
+                        icon: Icon(Icons.send)),
+                  )
                 ],
               ),
             ),

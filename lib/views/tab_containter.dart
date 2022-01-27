@@ -178,7 +178,7 @@ class _ContainerPage extends State<ContainerPage> {
           contact_person_number.replaceAll(' ', '')) {
         return {'hasApp': true, 'user': results[i]};
       } else {
-        return {'hasApp': false};
+        // return {'hasApp': false};
       }
     }
     return {'hasApp': false};

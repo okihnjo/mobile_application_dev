@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChatTrailingInfo extends StatelessWidget {
   @override
+  ChatTrailingInfo({this.datetime});
+  final datetime;
   Widget build(BuildContext context) {
+    print(DateFormat.Hms()
+        .format((datetime.toDate() as DateTime))
+        .toString()
+        .substring(0, 4));
     return Container(
       width: 60,
       child: Column(
@@ -19,7 +26,10 @@ class ChatTrailingInfo extends StatelessWidget {
                     )
                   : Container(height: 15, width: 15),
               // Text("${friendsList[i]['lastMsgTime']}")
-              Text('18:32')
+              Text(DateFormat.Hms()
+                  .format((datetime.toDate() as DateTime))
+                  .toString()
+                  .substring(0, 5))
             ],
           ),
           SizedBox(

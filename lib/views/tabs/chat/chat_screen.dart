@@ -7,6 +7,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
@@ -31,7 +32,7 @@ class ChatScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        ChatsOverview()
+        ChatsOverview(),
       ],
     );
   }

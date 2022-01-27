@@ -20,10 +20,10 @@ class Messages extends ConsumerWidget {
           itemBuilder: (ctx, index) => Container(
                 child: BubbleNormal(
                   text: value.docs[index]['text'],
-                  isSender: value.docs[index]['userId'] == uid,
-                  color: value.docs[index]['userId'] == uid
-                      ? Colors.green
-                      : Colors.blue,
+                  isSender: !value.docs[index]['received'],
+                  color: value.docs[index]['received']
+                      ? Colors.blue
+                      : Colors.green,
                   tail: true,
                   textStyle: const TextStyle(
                     fontSize: 20,

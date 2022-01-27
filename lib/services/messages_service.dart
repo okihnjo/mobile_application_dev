@@ -28,6 +28,7 @@ class MessageService {
         .collection('chats')
         .doc(partnerUid)
         .collection('messages')
+        .orderBy('createdAt', descending: true)
         .snapshots();
     return messages;
   }
