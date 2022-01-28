@@ -142,7 +142,7 @@ class AboutUs extends StatelessWidget {
                     leading: CircleAvatar(
                       radius: 30.0,
                       backgroundImage:
-                          NetworkImage('https://via.placeholder.com/150'),
+                         AssetImage('assets/images/Caner.png'),
                       // backgroundColor: Colors.transparent,
                     ),
                     title: Text('Caner Ünal'),
@@ -180,7 +180,7 @@ class AboutUs extends StatelessWidget {
                           child: ListTile(
                               minLeadingWidth: 10,
                               // isThreeLine: true,
-                              title: Text("okancoskun@gmx.de"),
+                              title: Text("caneruenal@gmail.com"),
                               leading: FaIcon(FontAwesomeIcons.mailBulk))),
                       Flexible(
                         child: ListTile(
@@ -199,7 +199,7 @@ class AboutUs extends StatelessWidget {
                         child: ListTile(
                             minLeadingWidth: 2,
                             // isThreeLine: true,
-                            title: Text("Okihnjo"),
+                            title: Text("C4n3r"),
                             leading: FaIcon(FontAwesomeIcons.github)),
                       ),
                       Flexible(
@@ -207,7 +207,7 @@ class AboutUs extends StatelessWidget {
                         child: ListTile(
                             minLeadingWidth: 2,
                             // isThreeLine: true,
-                            title: Text("Okihnjo"),
+                            title: Text("NA"),
                             leading: FaIcon(FontAwesomeIcons.stackOverflow)),
                       ),
                     ],

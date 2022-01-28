@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,6 +10,8 @@ class Bugs extends StatefulWidget {
 }
 
 class _BugsState extends State<Bugs> {
+  TextEditingController mailController = new TextEditingController();
+  TextEditingController bugController = new TextEditingController();
   double opacityLevel = 0.0;
   void initState() {
     super.initState();
@@ -17,6 +20,19 @@ class _BugsState extends State<Bugs> {
         opacityLevel = 1;
       });
     });
+  }
+
+  void sendBug() {
+  
+    
+      FirebaseFirestore.instance.collection("reports").doc().set({
+        'email': mailController.text,
+        'bugDescription': bugController.text,
+        'createdAt': Timestamp.now()
+      });
+      bugController.clear();
+      mailController.clear();
+    
   }
 
   @override
@@ -52,6 +68,8 @@ class _BugsState extends State<Bugs> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                     child: TextField(
+                      controller: mailController,
+                      onChanged: (value) {},
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Enter your Email adress',
@@ -68,6 +86,8 @@ class _BugsState extends State<Bugs> {
                       children: [
                         Expanded(
                           child: TextField(
+                            controller: bugController,
+                            onChanged: (value) {},
                             keyboardType: TextInputType.multiline,
                             minLines:
                                 5, //Normal textInputField will be displayed
@@ -112,7 +132,15 @@ class _BugsState extends State<Bugs> {
                     opacity: opacityLevel,
                     duration: const Duration(seconds: 3),
                     child: TextButton.icon(
-                      onPressed: null,
+                      onPressed: () {
+                        if (mailController.text.length > 4 || bugController.text.length > 1) {
+                        sendBug();
+                        final snackBar = const SnackBar(
+                            content: Text('Thank you for your report!'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }else{
+                        return null;
+                      }},
                       label: const Icon(Icons.send),
                       icon: const Text("Send"),
                     )),
