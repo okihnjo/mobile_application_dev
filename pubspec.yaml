@@ -47,6 +47,8 @@ dependencies:
   permission_handler: ^8.3.0
   lottie: ^1.2.1
   font_awesome_flutter: ^9.2.0
+  firebase_storage: ^10.2.5
+  image_picker: ^0.8.4+5
   
 dev_dependencies:
   flutter_test:
