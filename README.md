@@ -43,7 +43,7 @@ flutter run
 ```
 Make sure you have an emulator or a real device which is connected to your computer.
 
-**Step 3:**
+**Step 4:**
 
 If its not working, check if you have all the requirements:
 
