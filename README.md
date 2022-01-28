@@ -13,7 +13,7 @@ A few resources to get you started if this is your first Flutter project:
 
 ### Firebase
 
-This repo is using Firebase. We use Cloud Firestore and Cloud Storage to handle CRUD operations over the heroes and to store their images.
+This repo is using Firebase. We use Cloud Firestore, Cloud Storage and Authentication.
 
 
 ## How to Use 
