@@ -23,18 +23,28 @@ class UserDetailsScreen extends ConsumerWidget {
                         Stack(
                           children: [
                             ClipOval(
-                                child: Material(
-                                    child: Ink.image(
-                              image: NetworkImage(
-                                  data.data()["profilePicture"].toString()),
-                              height: 128,
-                              width: 128,
-                              fit: BoxFit.cover,
-                              child: InkWell(
-                                onTap: () {},
-                              ),
-                            ))),
-                            buildEditIcon()
+                                child: (data.data()['showProfilePicture'] &&
+                                        data
+                                                .data()['profilePicture']
+                                                .toString()
+                                                .length >
+                                            3)
+                                    ? Material(
+                                        child: Ink.image(
+                                        image: NetworkImage(data
+                                            .data()["profilePicture"]
+                                            .toString()),
+                                        height: 128,
+                                        width: 128,
+                                        fit: BoxFit.cover,
+                                        child: InkWell(
+                                          onTap: () {},
+                                        ),
+                                      ))
+                                    : const Text(
+                                        'N/A ',
+                                        style: TextStyle(fontSize: 15),
+                                      )),
                           ],
                         ),
                         SizedBox(width: 15),
@@ -70,7 +80,7 @@ class UserDetailsScreen extends ConsumerWidget {
                         Expanded(
                             child: Card(
                                 child: ListTile(
-                          leading: Icon(Icons.payment),
+                          leading: Icon(Icons.person),
                           title: Text(data.data()["name"]),
                         ))),
                         Expanded(
@@ -88,8 +98,10 @@ class UserDetailsScreen extends ConsumerWidget {
                         Expanded(
                             child: Card(
                                 child: ListTile(
-                          leading: Icon(Icons.mail),
-                          title: Text("Mail"),
+                          leading: Icon(Icons.person_pin),
+                          title: Text(
+                            data.data()["username"],
+                          ),
                         )))
                       ],
                     ))

@@ -17,111 +17,125 @@ class ProfileScreen extends ConsumerWidget {
     final meProvider = ref.watch(getMeFutureProvider(currentUser?.uid));
     return meProvider.when(
         data: (data) => RefreshIndicator(
-          onRefresh: () {print("ich bin refresher");
-         ref.refresh(getMeFutureProvider(currentUser?.uid));
-         return ref.read(getMeFutureProvider(currentUser?.uid).future);},
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
+              onRefresh: () {
+                print("ich bin refresher");
+                ref.refresh(getMeFutureProvider(currentUser?.uid));
+                return ref.read(getMeFutureProvider(currentUser?.uid).future);
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.85,
+                    width: MediaQuery.of(context).size.width,
                     child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    children: [
-                      Row(
+                      padding: EdgeInsets.all(15),
+                      child: Column(
                         children: [
-                          Stack(
+                          Row(
                             children: [
-                              ClipOval(
-                                  child: Material(
-                                      child: Ink.image(
-                                image: NetworkImage(
-                                    data.data()["profilePicture"].toString()),
-                                height: 128,
-                                width: 128,
-                                fit: BoxFit.cover,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => SecondRoute(
-                                                data
-                                                    .data()["profilePicture"]
-                                                    .toString(),
-                                                data.data()["email"],
-                                                data.data()["name"],
-                                                data.data()["surname"],
-                                                data
-                                                    .data()["phoneNumber"]
-                                                    .toString(),
-                                                data.data()["status"], data.data()["username"])));
-                                  },
-                                ),
-                              ))),
-                              Positioned(
-                                  bottom: 0, right: 4, child: buildEditIcon())
-                            ],
-                          ),
-                          SizedBox(width: 15),
-                          Column(
-                            children: [
-                              Text(
-                                data.data()["name"] + " " + data.data()["surname"],
-                                style: TextStyle(fontSize: 25),
+                              Stack(
+                                children: [
+                                  ClipOval(
+                                      child: Material(
+                                          child: Ink.image(
+                                    image: NetworkImage(data
+                                        .data()["profilePicture"]
+                                        .toString()),
+                                    height: 128,
+                                    width: 128,
+                                    fit: BoxFit.cover,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SecondRoute(
+                                                        data
+                                                            .data()[
+                                                                "profilePicture"]
+                                                            .toString(),
+                                                        data.data()["email"],
+                                                        data.data()["name"],
+                                                        data.data()["surname"],
+                                                        data
+                                                            .data()[
+                                                                "phoneNumber"]
+                                                            .toString(),
+                                                        data.data()["status"],
+                                                        data.data()[
+                                                            "username"])));
+                                      },
+                                    ),
+                                  ))),
+                                  Positioned(
+                                      bottom: 0,
+                                      right: 4,
+                                      child: buildEditIcon())
+                                ],
                               ),
-                              Text(
-                                data.data()["status"],
-                                style: TextStyle(color: Colors.grey, fontSize: 20),
+                              SizedBox(width: 15),
+                              Column(
+                                children: [
+                                  Text(
+                                    data.data()["name"] +
+                                        " " +
+                                        data.data()["surname"],
+                                    style: TextStyle(fontSize: 25),
+                                  ),
+                                  Text(
+                                    data.data()["status"],
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 20),
+                                  )
+                                ],
                               )
                             ],
-                          )
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Flexible(
+                              child: Column(
+                            children: [
+                              Expanded(
+                                  child: Card(
+                                      child: ListTile(
+                                leading: Icon(Icons.mail),
+                                title: Text(data.data()["email"]),
+                              ))),
+                              Expanded(
+                                  child: Card(
+                                      child: ListTile(
+                                leading: Icon(Icons.person),
+                                title: Text(data.data()["name"]),
+                              ))),
+                              Expanded(
+                                  child: Card(
+                                      child: ListTile(
+                                leading: Icon(Icons.people_alt),
+                                title: Text(data.data()["surname"]),
+                              ))),
+                              Expanded(
+                                  child: Card(
+                                      child: ListTile(
+                                leading: Icon(Icons.phone),
+                                title:
+                                    Text(data.data()["phoneNumber"].toString()),
+                              ))),
+                              Expanded(
+                                  child: Card(
+                                      child: ListTile(
+                                leading: Icon(Icons.person_pin),
+                                title: Text(data.data()["username"]),
+                              )))
+                            ],
+                          ))
                         ],
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Flexible(
-                          child: Column(
-                        children: [
-                          Expanded(
-                              child: Card(
-                                  child: ListTile(
-                            leading: Icon(Icons.mail),
-                            title: Text(data.data()["email"]),
-                          ))),
-                          Expanded(
-                              child: Card(
-                                  child: ListTile(
-                            leading: Icon(Icons.person),
-                            title: Text(data.data()["name"]),
-                          ))),
-                          Expanded(
-                              child: Card(
-                                  child: ListTile(
-                            leading: Icon(Icons.people_alt),
-                            title: Text(data.data()["surname"]),
-                          ))),
-                          Expanded(
-                              child: Card(
-                                  child: ListTile(
-                            leading: Icon(Icons.phone),
-                            title: Text(data.data()["phoneNumber"].toString()),
-                          ))),
-                          Expanded(
-                              child: Card(
-                                  child: ListTile(
-                            leading: Icon(Icons.person_pin),
-                            title: Text(data.data()["username"]),
-                          )))
-                        ],
-                      ))
-                    ],
-                  ),
-                )),
-          ),
-        ),
+                    )),
+              ),
+            ),
         loading: () {
           return Center(child: CircularProgressIndicator());
         },
@@ -168,7 +182,8 @@ class SecondRoute extends StatefulWidget {
     @required this.name,
     @required this.surname,
     @required this.phoneNumber,
-    @required this.status, @required this.username, {
+    @required this.status,
+    @required this.username, {
     Key? key,
   }) : super(key: key);
 
@@ -219,7 +234,8 @@ class _SecondRouteState extends State<SecondRoute> {
                                   child: TextField(
                                     controller: statusController
                                       ..text = widget.status,
-                                      onChanged: (value) => {widget.status = value as String},
+                                    onChanged: (value) =>
+                                        {widget.status = value as String},
                                     decoration: InputDecoration(
                                       //hintText: widget.status,
                                       hintStyle: TextStyle(color: Colors.black),
@@ -325,7 +341,7 @@ class _SecondRouteState extends State<SecondRoute> {
                                   decoration:
                                       InputDecoration(labelText: "Phonenumber"),
                                 )),
-                                Padding(
+                            Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 12),
                                 child: TextFormField(

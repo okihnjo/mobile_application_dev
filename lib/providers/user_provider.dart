@@ -16,7 +16,7 @@ final getContactsProvider = FutureProvider((ref) async {
 final getMeFutureProvider =
     FutureProvider.autoDispose.family((ref, String? uid) async {
   final getMeService = UserService.instance;
-  ref.maintainState = true;
+  // ref.maintainState = true;
   return await getMeService.getMe(uid);
 });
 
