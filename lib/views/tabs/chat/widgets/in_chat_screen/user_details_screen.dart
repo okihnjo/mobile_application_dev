@@ -37,9 +37,6 @@ class UserDetailsScreen extends ConsumerWidget {
                                         height: 128,
                                         width: 128,
                                         fit: BoxFit.cover,
-                                        child: InkWell(
-                                          onTap: () {},
-                                        ),
                                       ))
                                     : const Text(
                                         'N/A ',
@@ -51,9 +48,7 @@ class UserDetailsScreen extends ConsumerWidget {
                         Column(
                           children: [
                             Text(
-                              data.data()["name"] +
-                                  " " +
-                                  data.data()["surname"],
+                              data.data()["name"],
                               style: TextStyle(fontSize: 25),
                             ),
                             Text(

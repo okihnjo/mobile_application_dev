@@ -78,9 +78,7 @@ class ProfileScreen extends ConsumerWidget {
                               Column(
                                 children: [
                                   Text(
-                                    data.data()["name"] +
-                                        " " +
-                                        data.data()["surname"],
+                                    data.data()["name"],
                                     style: TextStyle(fontSize: 25),
                                   ),
                                   Text(
@@ -225,11 +223,13 @@ class _SecondRouteState extends State<SecondRoute> {
                           Column(
                             children: [
                               Text(
-                                widget.name + " " + widget.surname,
-                                style: TextStyle(fontSize: 25),
+                                widget.name,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
                               ),
                               Container(
-                                  width: 220,
+                                  width: 200,
                                   padding: EdgeInsets.all(5.0),
                                   child: TextField(
                                     controller: statusController
