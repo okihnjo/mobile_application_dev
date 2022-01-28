@@ -36,6 +36,10 @@ class Privacy extends ConsumerWidget {
                   ]),
             ),
         error: (err, ref) => Container(),
-        loading: () => const Text('Loading'));
+        loading: () => const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ));
   }
 }

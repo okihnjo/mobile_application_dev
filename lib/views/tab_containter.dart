@@ -102,7 +102,7 @@ class _ContainerPage extends State<ContainerPage> {
           return FractionallySizedBox(
             heightFactor: 0.9,
             child: Container(
-              color: Colors.amber,
+              // color: Colors.lightBlue[600],
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -119,26 +119,29 @@ class _ContainerPage extends State<ContainerPage> {
                                     builder: (context, snap) {
                                       if (snap.hasData) {
                                         return ListTile(
-                                            trailing: (snap.data
-                                                    as Map)['hasApp'] as bool
-                                                ? IconButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                      Navigator.of(context)
-                                                          .pushNamed('/chat',
-                                                              arguments: {
-                                                            'user': (snap.data
-                                                                as Map)['user']
-                                                          });
-                                                    },
-                                                    icon: Icon(Icons.send))
-                                                : Text(''),
-                                            title: Text(
-                                                data[i].displayName as String),
-                                            subtitle: Text((snap.data
-                                                    as Map)['hasApp'] as bool
-                                                ? 'Hat'
-                                                : 'Hat nicht'));
+                                          trailing: (snap.data as Map)['hasApp']
+                                                  as bool
+                                              ? IconButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                            '/chat',
+                                                            arguments: {
+                                                          'user': (snap.data
+                                                              as Map)['user']
+                                                        });
+                                                  },
+                                                  icon: Icon(Icons.send))
+                                              : Text(''),
+                                          title: Text(
+                                              data[i].displayName as String),
+                                          subtitle: Text((snap.data
+                                                  as Map)['hasApp'] as bool
+                                              ? 'Saloon-Member'
+                                              : ''),
+                                          leading: const Icon(Icons.person),
+                                        );
                                       } else {
                                         return Text("Loading");
                                       }
@@ -157,7 +160,7 @@ class _ContainerPage extends State<ContainerPage> {
                           const Center(child: CircularProgressIndicator()),
                     ),
                     ElevatedButton(
-                      child: const Text('Close BottomSheet'),
+                      child: const Text('Close'),
                       onPressed: () => Navigator.pop(context),
                     )
                   ],

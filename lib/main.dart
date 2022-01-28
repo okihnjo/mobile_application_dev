@@ -3,6 +3,7 @@ import 'package:saloon_app/providers/theme_provider.dart';
 import 'package:saloon_app/views/authentification/login/login.dart';
 import 'package:saloon_app/views/tabs/chat/chat_screen.dart';
 import 'package:saloon_app/views/tabs/chat/widgets/in_chat_screen/in_chat_screen.dart';
+import 'package:saloon_app/views/tabs/chat/widgets/in_chat_screen/user_details_screen.dart';
 import 'package:saloon_app/views/tabs/home/settings_screen.dart';
 import 'package:saloon_app/views/tab_containter.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Consumer(
         builder: (context, ref, _) => MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ref.watch(theme),
               darkTheme: ref.watch(darkTheme),
@@ -66,6 +68,7 @@ class _MyAppState extends State<MyApp> {
                 Premium.routeName: (ctx) => const Premium(),
                 Bugs.routeName: (ctx) => const Bugs(),
                 AboutUs.routeName: (ctx) => const AboutUs(),
+                UserDetailsScreen.routeName: (ctx) => const UserDetailsScreen(),
                 ContainerPage.routeName: (ctx) =>
                     ContainerPage(title: 'Flutter Demo Home Page')
               },

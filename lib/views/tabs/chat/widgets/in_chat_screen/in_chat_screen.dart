@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:saloon_app/providers/messages_provider.dart';
+import 'package:saloon_app/views/tabs/chat/widgets/in_chat_screen/user_details_screen.dart';
 import 'package:saloon_app/views/tabs/chat/widgets/in_chat_screen/widgets/input_bar.dart';
 import 'package:saloon_app/views/tabs/chat/widgets/in_chat_screen/widgets/messages.dart';
 
@@ -33,14 +34,14 @@ class InChatScreen extends ConsumerWidget {
                     Text(user['username'], overflow: TextOverflow.clip),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.check_sharp, size: 16),
-                        const Icon(Icons.check_sharp, size: 16),
-                        const SizedBox(width: 5),
+                      children: const [
+                        Icon(Icons.check_sharp, size: 16),
+                        Icon(Icons.check_sharp, size: 16),
+                        SizedBox(width: 5),
                         Flexible(
-                          child: const Text(
+                          child: Text(
                             'Available',
-                            style: const TextStyle(fontSize: 15),
+                            style: TextStyle(fontSize: 15),
                           ),
                         )
                       ],
@@ -51,15 +52,17 @@ class InChatScreen extends ConsumerWidget {
             ],
           ),
           actions: <Widget>[
-            IconButton(
+            const IconButton(
               icon: Icon(
                 Icons.phone,
               ),
-              onPressed: () {},
+              onPressed: null,
             ),
             IconButton(
-              icon: Icon(Icons.videocam),
-              onPressed: () {},
+              icon: Icon(Icons.info),
+              onPressed: () => Navigator.of(context).pushNamed(
+                  UserDetailsScreen.routeName,
+                  arguments: {'user': user}),
             ),
           ],
         ),

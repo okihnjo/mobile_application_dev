@@ -8,6 +8,7 @@ import 'package:saloon_app/services/theme_service.dart';
 // THEMES
 // light
 final _theme = ThemeData(
+  appBarTheme: AppBarTheme(backgroundColor: Colors.red),
   primaryColor: Colors.deepPurple,
   bottomAppBarColor: Colors.black26,
   primaryColorDark: Colors.amber,
