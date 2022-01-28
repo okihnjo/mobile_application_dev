@@ -45,6 +45,8 @@ dependencies:
   chat_bubbles: ^1.1.0
   contacts_service: ^0.6.3
   permission_handler: ^8.3.0
+  firebase_storage: ^10.2.5
+  image_picker: ^0.8.4+5
   
 dev_dependencies:
   flutter_test:

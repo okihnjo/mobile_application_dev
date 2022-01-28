@@ -16,3 +16,5 @@ final getMeFutureProvider = FutureProvider.family((ref, String? uid) async {
   final getMeService = UserService.instance;
   return await getMeService.getMe(uid);
 });
+
+// final userServiceProvider = Provider((ref) => UserService.instance.getMe(uid));
